@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff00ff">
-    <title>J&F SHARED CONSOLE</title>
+    <meta name="theme-color" content="#000000">
+    <title>J&F ULTIMATE CONSOLE</title>
 </head>
 <body id="app-body">
     
@@ -18,22 +18,17 @@
             <p class="subtitle">EST. 2026 • SHARED PET EDITION</p>
             
             <div id="login-zone">
-                <input type="password" id="access-key" placeholder="IDENTIFY (J OR F)...">
-                <button onclick="checkAccess()" class="start-btn">INSERT COIN</button>
+                <input type="password" id="access-key" placeholder="IDENTIFY (J OR F)..." maxlength="10">
+                <button onclick="checkAccess()" class="arcade-btn love" style="width: auto; padding: 0 20px; border-radius: 10px;">INSERT COIN</button>
             </div>
-
-            <div class="global-board">
-                <h3>🏆 HALL OF FAME</h3>
-                <div id="leaderboard-list">WAITING...</div>
-            </div>
-            <p id="error-msg" class="error-text" style="display:none; color: red;">ACCESS DENIED: J&F ONLY!</p>
+            <p id="error-msg" class="error-text" style="display:none; color: red; margin-top: 10px;">ACCESS DENIED</p>
         </div>
     </div>
 
     <div class="arcade-cabinet" id="main-cabinet">
         
         <div class="marquee">
-            <div class="marquee-text logo-glow">JUSTINE 💖 FRANCINE</div>
+            <div class="logo-glow">JUSTINE 💖 FRANCINE</div>
         </div>
 
         <div class="screen-border">
@@ -41,43 +36,28 @@
                 <div id="notif-banner" class="hidden-notif"></div>
 
                 <div class="top-hud">
+                    <div id="weather-display">☁️ LOADING...</div>
                     <div class="hud-item">👤 <span id="my-name-display">---</span></div>
-                    <div id="weather-display" class="weather-tag">☁️ LOADING...</div>
-                    <div class="hud-item clickable" onclick="openDex()">🐾 <span id="pet-count">0</span></div>
                     <div class="hud-item">🍪 <span id="cookie-count">0000</span></div>
                 </div>
 
-                <div id="heart-container"></div>
-
                 <div id="pet-area">
-                    <div class="pet-shadow"></div>
                     <div id="pet-display" class="bounce">🥚</div>
-                    <div id="zzz-container"></div> 
-                    
                     <div class="pet-info">
-                        <p id="pet-name-label" class="pet-name">OUR SHARED EGG</p>
+                        <p id="pet-name-label" class="pet-name">OUR SHARED PET</p>
+                        
                         <div class="xp-container">
                             <div class="xp-bar-container">
-                                <div id="progress-fill"></div>
+                                <div id="progress-fill" style="width: 0%;"></div>
                             </div>
-                            <div id="xp-text-label" style="font-size: 8px; color: var(--neon-blue); margin-top: 2px;">XP: 0 / 500</div>
+                            <div id="xp-text-label">XP: <span id="current-xp">0</span> / 5000</div>
                         </div>
                     </div>
                     <button id="ascend-btn" class="hidden-btn" onclick="ascendPet()">✨ EVOLVE NOW</button>
                 </div>
                 
                 <div class="status-zone">
-                    <div id="partner-status">SYNCING WITH PARTNER...</div>
-                    <div class="streak-badge">
-                        <span id="fire-l">🔥</span>
-                        <span id="duo-streak-val">00</span>
-                        <span id="fire-r">🔥</span>
-                    </div>
-                </div>
-
-                <div class="daily-note-box">
-                    <input type="text" id="daily-note-input" placeholder="Say something to Love..." maxlength="40">
-                    <button onclick="saveNote()" class="note-send">SEND</button>
+                    <div id="partner-status" style="font-size: 10px; color: #555;">SYNCING WITH PARTNER...</div>
                 </div>
 
                 <div class="action-btns">
@@ -88,35 +68,48 @@
         </div>
 
         <div class="control-panel">
-            <div class="joystick-grid">
-                <button class="game-btn" onclick="openGame('tap')">TAP HERO</button>
-                <button class="game-btn" onclick="openGame('math')">MATH PRO</button>
-                <button class="game-btn" onclick="openGame('color')">MATCH IT</button>
-                <button class="game-btn" onclick="openGame('guess')">LUCKY 3</button>
-                <button class="game-btn" onclick="openGame('reflex')">REACTION</button>
+            <div class="grid-header">SELECT CHALLENGE</div>
+            <div class="scrollable-grid">
+                <button class="game-btn" onclick="requestGame('tap')">TAP HERO</button>
+                <button class="game-btn" onclick="requestGame('math')">MATH PRO</button>
+                <button class="game-btn" onclick="requestGame('match')">MATCH IT</button>
+                <button class="game-btn" onclick="requestGame('lucky')">LUCKY 3</button>
+                <button class="game-btn" onclick="requestGame('reaction')">REACTION</button>
+                <button class="game-btn" onclick="requestGame('brick')">BRICK BREAK</button>
+                <button class="game-btn" onclick="requestGame('snake')">SNAKE J&F</button>
+                <button class="game-btn" onclick="requestGame('memory')">MEMORY FLIP</button>
+                <button class="game-btn" onclick="requestGame('avoid')">AVOID BLOCKS</button>
+                <button class="game-btn" onclick="requestGame('hilo')">HI-LO</button>
+                <button class="game-btn" onclick="requestGame('type')">FAST TYPER</button>
+                <button class="game-btn" onclick="requestGame('emoji')">EMOJI HUNT</button>
+                <button class="game-btn" onclick="requestGame('coin')">COIN CATCH</button>
+                <button class="game-btn" onclick="requestGame('draw')">QUICK DRAW</button>
+                <button class="game-btn" onclick="requestGame('word')">SCRAMBLE</button>
             </div>
             
             <div class="footer-btns">
-                <button onclick="sendGift()" class="util-btn">🎁 GIFT</button>
+                <button onclick="openGift()" class="util-btn">🎁 GIFT</button>
                 <button onclick="openDex()" class="util-btn">🐾 DEX</button>
                 <button onclick="toggleNightMode()" class="util-btn">🌓 MODE</button>
             </div>
         </div>
     </div>
 
-    <div id="dex-overlay" class="overlay">
-        <div class="arcade-modal">
-            <h2 class="modal-title">OUR COLLECTION</h2>
-            <div id="pet-grid" class="pet-grid-container"></div>
-            <button class="close-modal-btn" onclick="closeDex()">CLOSE</button>
+    <div id="game-overlay" class="overlay">
+        <div class="game-modal">
+            <h2 id="game-title" style="color: var(--neon-blue); font-size: 18px;">VOTE DIFFICULTY</h2>
+            <div id="game-screen" style="min-height: 150px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                </div>
+            <button class="util-btn" onclick="requestCloseGame()" style="margin-top: 20px; width: 100%;">QUIT</button>
         </div>
     </div>
 
-    <div id="game-overlay" class="overlay">
-        <div class="arcade-modal game-modal">
-            <h2 id="game-title">READY?</h2>
-            <div id="game-screen"></div>
-            <button class="close-modal-btn" onclick="closeGame()">QUIT</button>
+    <div id="dex-overlay" class="overlay">
+        <div class="game-modal" style="border-color: var(--neon-pink);">
+            <h2 class="modal-title" style="color: var(--neon-pink);">PET COLLECTION</h2>
+            <div id="pet-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0;">
+                </div>
+            <button class="util-btn" onclick="document.getElementById('dex-overlay').style.display='none'" style="width: 100%;">CLOSE</button>
         </div>
     </div>
 
