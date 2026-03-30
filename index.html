@@ -2,114 +2,118 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
+    
+    <link rel="stylesheet" href="style.css">
     <title>J&F ULTIMATE CONSOLE</title>
 </head>
 <body id="app-body">
-    
     <div class="scanlines"></div>
 
-    <div id="fs-overlay">
+    <div id="fs-overlay" class="overlay-full">
         <div class="splash-content">
             <h1 class="arcade-title blink">J&F CONSOLE</h1>
-            <p class="subtitle">EST. 2026 • SHARED PET EDITION</p>
-            
-            <div id="login-zone">
+            <div id="login-zone" class="login-card">
                 <input type="password" id="access-key" placeholder="IDENTIFY (J OR F)..." maxlength="10">
-                <button onclick="checkAccess()" class="arcade-btn love" style="width: auto; padding: 0 20px; border-radius: 10px;">INSERT COIN</button>
+                <button onclick="window.checkAccess()" class="arcade-btn love-btn-style">INSERT COIN</button>
             </div>
-            <p id="error-msg" class="error-text" style="display:none; color: red; margin-top: 10px;">ACCESS DENIED</p>
+            <div id="loading-bar-container" style="display:none;">
+                <p class="loading-text">SYNCING DATA...</p>
+                <div class="load-border"><div id="load-fill"></div></div>
+            </div>
+            <p id="error-msg" class="error-text" style="display:none">⚠️ ACCESS DENIED</p>
         </div>
     </div>
 
-    <div class="arcade-cabinet" id="main-cabinet">
-        
-        <div class="marquee">
+    <main class="arcade-cabinet">
+        <header class="marquee">
             <div class="logo-glow">JUSTINE 💖 FRANCINE</div>
-        </div>
+        </header>
 
         <div class="screen-border">
             <div class="screen">
                 <div id="notif-banner" class="hidden-notif"></div>
-
+                
                 <div class="top-hud">
-                    <div id="weather-display">☁️ LOADING...</div>
                     <div class="hud-item">👤 <span id="my-name-display">---</span></div>
                     <div class="hud-item">🍪 <span id="cookie-count">0000</span></div>
                 </div>
 
+                <div class="leaderboard-bar">
+                    <div class="score-tag justine-color">JUSTINE: <span id="score-justine">0</span></div>
+                    <div class="score-divider">|</div>
+                    <div class="score-tag francine-color">FRANCINE: <span id="score-francine">0</span></div>
+                </div>
+
                 <div id="pet-area">
                     <div id="pet-display" class="bounce">🥚</div>
-                    <div class="pet-info">
-                        <p id="pet-name-label" class="pet-name">OUR SHARED PET</p>
-                        
-                        <div class="xp-container">
-                            <div class="xp-bar-container">
-                                <div id="progress-fill" style="width: 0%;"></div>
-                            </div>
-                            <div id="xp-text-label">XP: <span id="current-xp">0</span> / 5000</div>
+                    <div class="pet-stats-card">
+                        <p id="pet-name-label" class="pet-name-tag">MYSTIC EGG</p>
+                        <div class="xp-bar-outline">
+                            <div id="progress-fill"></div>
                         </div>
+                        <div id="xp-text-label">XP: <span id="current-xp">0</span> / 5000</div>
                     </div>
-                    <button id="ascend-btn" class="hidden-btn" onclick="ascendPet()">✨ EVOLVE NOW</button>
                 </div>
                 
                 <div class="status-zone">
-                    <div id="partner-status" style="font-size: 10px; color: #555;">SYNCING WITH PARTNER...</div>
+                    <div id="partner-status" class="status-pill">
+                        <span id="status-dot"></span> <span id="partner-name">SYNCING...</span>
+                    </div>
                 </div>
 
-                <div class="action-btns">
-                    <button class="arcade-btn feed" id="feed-btn">FEED</button>
-                    <button class="arcade-btn love" id="love-btn">POKE</button>
+                <div class="interaction-layer">
+                    <button class="arcade-btn feed-btn-style" id="feed-btn">FEED</button>
+                    <button class="arcade-btn love-btn-style" id="love-btn">POKE</button>
                 </div>
             </div>
         </div>
 
-        <div class="control-panel">
+        <section class="control-panel">
             <div class="grid-header">SELECT CHALLENGE</div>
             <div class="scrollable-grid">
-                <button class="game-btn" onclick="requestGame('tap')">TAP HERO</button>
-                <button class="game-btn" onclick="requestGame('math')">MATH PRO</button>
-                <button class="game-btn" onclick="requestGame('match')">MATCH IT</button>
-                <button class="game-btn" onclick="requestGame('lucky')">LUCKY 3</button>
-                <button class="game-btn" onclick="requestGame('reaction')">REACTION</button>
-                <button class="game-btn" onclick="requestGame('brick')">BRICK BREAK</button>
-                <button class="game-btn" onclick="requestGame('snake')">SNAKE J&F</button>
-                <button class="game-btn" onclick="requestGame('memory')">MEMORY FLIP</button>
-                <button class="game-btn" onclick="requestGame('avoid')">AVOID BLOCKS</button>
-                <button class="game-btn" onclick="requestGame('hilo')">HI-LO</button>
-                <button class="game-btn" onclick="requestGame('type')">FAST TYPER</button>
-                <button class="game-btn" onclick="requestGame('emoji')">EMOJI HUNT</button>
-                <button class="game-btn" onclick="requestGame('coin')">COIN CATCH</button>
-                <button class="game-btn" onclick="requestGame('draw')">QUICK DRAW</button>
-                <button class="game-btn" onclick="requestGame('word')">SCRAMBLE</button>
+                <button class="game-btn" onclick="window.requestGame('tap')">👆 TAP</button>
+                <button class="game-btn" onclick="window.requestGame('math')">🔢 MATH</button>
+                <button class="game-btn" onclick="window.requestGame('match')">🎨 MATCH</button>
+                <button class="game-btn" onclick="window.requestGame('lucky')">🎲 LUCKY</button>
+                <button class="game-btn" onclick="window.requestGame('reaction')">⚡ REACT</button>
+                <button class="game-btn" onclick="window.requestGame('brick')">🧱 BRICK</button>
+                <button class="game-btn" onclick="window.requestGame('snake')">🐍 SNAKE</button>
+                <button class="game-btn" onclick="window.requestGame('memory')">🧠 MEMORY</button>
+                <button class="game-btn" onclick="window.requestGame('avoid')">🚀 AVOID</button>
+                <button class="game-btn" onclick="window.requestGame('hilo')">⚖️ HI-LO</button>
+                <button class="game-btn" onclick="window.requestGame('type')">⌨️ TYPE</button>
+                <button class="game-btn" onclick="window.requestGame('emoji')">🔍 EMOJI</button>
+                <button class="game-btn" onclick="window.requestGame('coin')">🪙 COIN</button>
+                <button class="game-btn" onclick="window.requestGame('draw')">✏️ DRAW</button>
+                <button class="game-btn" onclick="window.requestGame('word')">🔠 WORD</button>
             </div>
-            
-            <div class="footer-btns">
-                <button onclick="openGift()" class="util-btn">🎁 GIFT</button>
-                <button onclick="openDex()" class="util-btn">🐾 DEX</button>
-                <button onclick="toggleNightMode()" class="util-btn">🌓 MODE</button>
-            </div>
-        </div>
-    </div>
+
+            <footer class="footer-btns">
+                <button onclick="window.openGift()" class="util-btn gift-btn">🎁 GIFT</button>
+                <button onclick="window.openDex()" class="util-btn">🐾 DEX</button>
+                <button onclick="window.logout()" class="util-btn logout-btn">🚪 OUT</button>
+            </footer>
+        </section>
+    </main>
 
     <div id="game-overlay" class="overlay">
         <div class="game-modal">
-            <h2 id="game-title" style="color: var(--neon-blue); font-size: 18px;">VOTE DIFFICULTY</h2>
-            <div id="game-screen" style="min-height: 150px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                </div>
-            <button class="util-btn" onclick="requestCloseGame()" style="margin-top: 20px; width: 100%;">QUIT</button>
+            <h2 id="game-title">VOTE DIFFICULTY</h2>
+            <div id="game-screen"></div>
+            <button class="util-btn" onclick="window.requestCloseGame()">EXIT</button>
         </div>
     </div>
 
     <div id="dex-overlay" class="overlay">
-        <div class="game-modal" style="border-color: var(--neon-pink);">
-            <h2 class="modal-title" style="color: var(--neon-pink);">PET COLLECTION</h2>
-            <div id="pet-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0;">
-                </div>
-            <button class="util-btn" onclick="document.getElementById('dex-overlay').style.display='none'" style="width: 100%;">CLOSE</button>
+        <div class="game-modal">
+            <h2>PET COLLECTION</h2>
+            <p>ULTRA RARES: <span id="rare-count">0</span>/5</p>
+            <div id="pet-grid" class="pet-grid-container"></div>
+            <button class="util-btn" onclick="window.closeDex()">BACK</button>
         </div>
     </div>
 
